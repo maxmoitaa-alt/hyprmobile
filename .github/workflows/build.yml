@@ -2,7 +2,7 @@ name: Build HyprMobile
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -23,21 +23,19 @@ jobs:
 
       - name: Build Pi-Gen builder image
         run: |
-          cd pi-gen
           docker build -t hyprmobile-builder .
 
       - name: Run Pi-Gen build
         run: |
-          cd pi-gen
           docker run --rm --privileged \
-            -v "${{ github.workspace }}/pi-gen:/pi-gen" \
+            -v "${{ github.workspace }}:/pi-gen" \
             -v "${{ github.workspace }}/deploy:/deploy" \
             hyprmobile-builder \
             /pi-gen/build-docker.sh
 
       - name: Find and compress image
         run: |
-          cd pi-gen/deploy
+          cd deploy
           IMG=$(find . -name "*.img" | head -1)
           if [ -z "$IMG" ]; then
             echo "No image found!"
@@ -52,12 +50,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: hyprmobile-img
-          path: pi-gen/deploy/hyprmobile.img.zst
+          path: deploy/hyprmobile.img.zst
           retention-days: 30
           compression-level: 0
 
       - name: Show file info
         run: |
-          ls -la pi-gen/deploy/
+          ls -la deploy/
           echo "=== DONE ==="
           echo "Download the artifact from Actions page -> Artifacts -> hyprmobile-img"
