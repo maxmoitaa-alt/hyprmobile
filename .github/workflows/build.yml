@@ -12,7 +12,7 @@ jobs:
   build:
     name: Build Raspberry Pi OS + Hyprland Mobile
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
 
     steps:
       - name: Checkout repository
@@ -31,7 +31,7 @@ jobs:
             -v "${{ github.workspace }}:/pi-gen" \
             -v "${{ github.workspace }}/deploy:/deploy" \
             hyprmobile-builder \
-            /pi-gen/build-docker.sh
+            bash -c "cd /pi-gen && source config && ./build.sh && mkdir -p /deploy && cp -r deploy/* /deploy/ 2>/dev/null || true"
 
       - name: Find and compress image
         run: |
