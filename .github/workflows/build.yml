@@ -31,7 +31,7 @@ jobs:
             -v "${{ github.workspace }}:/pi-gen" \
             -v "${{ github.workspace }}/deploy:/deploy" \
             hyprmobile-builder \
-            bash -c "cd /pi-gen && source config && ./build.sh && mkdir -p /deploy && cp -r deploy/* /deploy/ 2>/dev/null || true"
+            bash -c "cd /pi-gen && source config && ./build.sh && cp -r /pi-gen/deploy/* /deploy/ 2>/dev/null || true"
 
       - name: Find and compress image
         run: |
@@ -40,6 +40,7 @@ jobs:
           if [ -z "$IMG" ]; then
             echo "No image found!"
             ls -la
+            find /pi-gen -name "*.img" 2>/dev/null || true
             exit 1
           fi
           echo "Found image: $IMG"
