@@ -25,10 +25,9 @@ jobs:
         run: |
           docker build -t hyprmobile-builder .
 
-      - name: Run Pi-Gen build
+      - name: Run Pi-Gen build (no host mount - use baked image)
         run: |
           docker run --rm --privileged \
-            -v "${{ github.workspace }}:/pi-gen" \
             -v "${{ github.workspace }}/deploy:/deploy" \
             hyprmobile-builder \
             bash -c "cd /pi-gen && source config && ./build.sh && cp -r /pi-gen/deploy/* /deploy/ 2>/dev/null || true"
