@@ -1,0 +1,63 @@
+name: Build HyprMobile
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Raspberry Pi OS + Hyprland Mobile
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Pi-Gen builder image
+        run: |
+          cd pi-gen
+          docker build -t hyprmobile-builder .
+
+      - name: Run Pi-Gen build
+        run: |
+          cd pi-gen
+          docker run --rm --privileged \
+            -v "${{ github.workspace }}/pi-gen:/pi-gen" \
+            -v "${{ github.workspace }}/deploy:/deploy" \
+            hyprmobile-builder \
+            /pi-gen/build-docker.sh
+
+      - name: Find and compress image
+        run: |
+          cd pi-gen/deploy
+          IMG=$(find . -name "*.img" | head -1)
+          if [ -z "$IMG" ]; then
+            echo "No image found!"
+            ls -la
+            exit 1
+          fi
+          echo "Found image: $IMG"
+          zstd -19 -T0 "$IMG" -o "hyprmobile.img.zst"
+          echo "Compressed size: $(du -h hyprmobile.img.zst | cut -f1)"
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hyprmobile-img
+          path: pi-gen/deploy/hyprmobile.img.zst
+          retention-days: 30
+          compression-level: 0
+
+      - name: Show file info
+        run: |
+          ls -la pi-gen/deploy/
+          echo "=== DONE ==="
+          echo "Download the artifact from Actions page -> Artifacts -> hyprmobile-img"

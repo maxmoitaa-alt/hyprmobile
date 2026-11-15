@@ -1,0 +1,220 @@
+# Base system
+raspberrypi-kernel
+raspberrypi-bootloader
+raspberrypi-sys-mods
+firmware-raspberrypi
+firmware-brcm80211
+pi-bluetooth
+
+# Wayland / Hyprland core
+hyprland
+hyprlock
+hypridle
+hyprpolkitagent
+xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
+qt6-wayland
+qt5-wayland
+wayland-protocols
+libwayland-dev
+
+# Graphics / DRM / KMS
+libdrm-dev
+libgbm-dev
+libegl-dev
+libgles2-mesa-dev
+mesa-vulkan-drivers
+vulkan-tools
+
+# Input / Touch
+libinput-tools
+libinput-bin
+evdev-utils
+xserver-xorg-input-libinput
+
+# Bar / UI / Notifications
+waybar
+wofi
+mako
+swaync
+grim
+slurp
+wl-clipboard
+wtype
+wlr-randr
+wlroots0.18
+
+# Virtual Keyboard
+wvkbd
+squeekboard
+maliit-keyboard
+
+# System / Network / Audio
+network-manager
+network-manager-gnome
+bluez
+blueman
+pipewire
+wireplumber
+pipewire-pulse
+pavucontrol
+brightnessctl
+playerctl
+upower
+udisks2
+
+# Terminal / Shell
+foot
+kitty
+zsh
+fish
+starship
+btop
+htop
+tmux
+
+# File manager
+nemo
+thunar
+gvfs
+gvfs-backends
+file-roller
+
+# Browser (lightweight)
+firefox-esr
+chromium
+
+# Apps mobile style
+geary
+chatty
+calls
+gnome-camera
+cheese
+gnome-clocks
+gnome-weather
+gnome-calendar
+gnome-contacts
+baobab
+gnome-disk-utility
+
+# Utilities (lightweight "bloatware" - useful tools)
+curl
+wget
+git
+vim
+nano
+micro
+jq
+yq
+ripgrep
+fd-find
+fzf
+zoxide
+eza
+bat
+delta
+lazygit
+lazydocker
+duf
+dust
+procs
+sd
+tokei
+hyperfine
+choose
+xh
+httpie
+dog
+glow
+mdcat
+termimg
+viu
+chafa
+timg
+asciinema
+sshfs
+rclone
+syncthing
+tailscale
+wireguard-tools
+openvpn
+network-manager-openvpn-gnome
+network-manager-l2tp-gnome
+network-manager-pptp-gnome
+network-manager-vpnc-gnome
+
+# Python / Development
+python3
+python3-pip
+python3-venv
+python3-dev
+nodejs
+npm
+golang-go
+rustc
+cargo
+
+# Multimedia
+mpv
+ffmpeg
+imagemagick
+gstreamer1.0-tools
+gstreamer1.0-plugins-base
+gstreamer1.0-plugins-good
+gstreamer1.0-plugins-bad
+gstreamer1.0-plugins-ugly
+gstreamer1.0-libav
+
+# Fonts
+fonts-noto
+fonts-noto-color-emoji
+fonts-firacode
+fonts-jetbrains-mono
+fonts-cascadia-code
+fonts-ubuntu
+fonts-roboto
+fonts-inter
+
+# Themes / Icons
+adwaita-icon-theme
+adwaita-qt
+gtk2-engines-murrine
+gtk2-engines-pixbuf
+sassc
+
+# Power management
+tlp
+tlp-rdw
+powertop
+acpi
+acpid
+
+# ZRAM for memory optimization
+zram-tools
+
+# Printing / Scanning (optional)
+cups
+cups-client
+system-config-printer
+simple-scan
+
+# OCR / Accessibility
+tesseract-ocr
+tesseract-ocr-por
+speech-dispatcher
+espeak-ng
+espeak-ng-data
+
+# Security
+ufw
+fail2ban
+lynis
+rkhunter
+clamav
+clamav-daemon
+
+# Backup / Sync
+timeshift
+borgbackup
+restic
+rsync
