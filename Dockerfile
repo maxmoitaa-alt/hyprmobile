@@ -19,16 +19,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Enable binfmt for arm64
 RUN update-binfmts --enable qemu-aarch64
 
-# Set working directory
+# Clone official pi-gen
 WORKDIR /pi-gen
+RUN git clone --depth=1 https://github.com/RPi-Distro/pi-gen.git /pi-gen-official \
+    && cp -r /pi-gen-official/* /pi-gen/ \
+    && rm -rf /pi-gen-official
 
-# Copy pi-gen source FIRST
-COPY . /pi-gen/
+# Copy our custom stages and config OVER the official pi-gen
+COPY config /pi-gen/config
+COPY stage1 /pi-gen/stage1
+COPY stage2 /pi-gen/stage2
+COPY stage3 /pi-gen/stage3
+COPY stage4 /pi-gen/stage4
 
-# Fix line endings and make scripts executable AFTER copy
+# Fix line endings and make scripts executable
 RUN find /pi-gen -name "*.sh" -exec dos2unix {} \; 2>/dev/null || true
 RUN find /pi-gen -name "*.sh" -exec chmod +x {} \;
-RUN chmod +x /pi-gen/build.sh
 
-# Default command
+# Default command - run pi-gen's build.sh non-interactively
 CMD ["./build.sh"]
