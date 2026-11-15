@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     debootstrap qemu-user-static binfmt-support \
     dosfstools parted kpartx zerofree zip \
     xxd curl wget unzip git \
-    ca-certificates gnupg \
+    ca-certificates gnupg dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable binfmt for arm64
@@ -25,7 +25,8 @@ WORKDIR /pi-gen
 # Copy pi-gen source
 COPY . /pi-gen/
 
-# Make scripts executable
+# Fix line endings and make scripts executable
+RUN find /pi-gen -name "*.sh" -exec dos2unix {} \; 2>/dev/null || true
 RUN find /pi-gen -name "*.sh" -exec chmod +x {} \;
 
 # Default command
