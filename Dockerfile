@@ -22,12 +22,13 @@ RUN update-binfmts --enable qemu-aarch64
 # Set working directory
 WORKDIR /pi-gen
 
-# Copy pi-gen source
+# Copy pi-gen source FIRST
 COPY . /pi-gen/
 
-# Fix line endings and make scripts executable
+# Fix line endings and make scripts executable AFTER copy
 RUN find /pi-gen -name "*.sh" -exec dos2unix {} \; 2>/dev/null || true
 RUN find /pi-gen -name "*.sh" -exec chmod +x {} \;
+RUN chmod +x /pi-gen/build.sh
 
 # Default command
-CMD ["./build-docker.sh"]
+CMD ["./build.sh"]
